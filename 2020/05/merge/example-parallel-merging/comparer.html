@@ -460,8 +460,24 @@
             var window_location = href.substring(0, href.lastIndexOf('/')) + "/";
             // console.log('window_location:', window_location)
 
+            var tree_setting1 = {
+                    'tree_root_file_nm': 'tree_smooth.json',
+                    'step_event_nm': 'step_event.json',
+                    'tree_root_href': window_location + 'data_single/',    // with trailing slash!
+                    'tile_root_href': window_location + 'data_single/',
+                    'draw_cw_faces': false,
+                    'do_depth_test': false,                    
+                    'do_blend': false,
+                    'opacity': 1,
+                    // 'texture_root_href': 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2017_ortho25/EPSG:28992/'
+                    'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/opentopoachtergrondkaart/EPSG:28992/'
+                    //'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/'
+                }
+            var tree_setting2 = Object.assign({}, tree_setting1) //just a shallow copy  
+            tree_setting2.tree_root_href =  window_location + 'data/'
+            tree_setting2.tile_root_href =  window_location + 'data/'
 
-            var map_settings1 = {
+            var map_setting1 = {
                 'initialization': {
                     'scale_den': 10000, //top10nl, start_scale
                     'center2d': [186500.0, 312450.0],     //top10nl, center
@@ -470,39 +486,23 @@
                     'navigationBar_title': 'Top10NL',
                 },
                 'canvas_nm': canvas_nm1,
-                'datasets': [{
-                    'tree_root_file_nm': 'tree_smooth.json',
-                    'eventdiff_nm': 'eventdiff.json',
-                    'tree_root_href': window_location + 'data_single/',    // with trailing slash!
-                    'tile_root_href': window_location + 'data_single/',
-                    // 'texture_root_href': 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2017_ortho25/EPSG:28992/'
-                    'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/opentopoachtergrondkaart/EPSG:28992/'
-                    //'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/'
-                }],
+                'tree_settings': [tree_setting1],
                 'interaction_defaults': []
             }
 
-            var map_settings2 = {
-                'initialization': map_settings1.initialization,
-                'canvas_nm': canvas_nm2,
-                'datasets': [{
-                    'tree_root_file_nm': map_settings1.datasets[0].tree_root_file_nm,
-                    'eventdiff_nm': map_settings1.datasets[0].eventdiff_nm,
-                    'tree_root_href': window_location + 'data/',    // with trailing slash!
-                    'tile_root_href': window_location + 'data/',
-                    'texture_root_href': map_settings1.datasets[0].texture_root_href
-                    //'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/'
-                }],
-                'interaction_defaults': []
-            }
+            var map_setting2 = Object.assign({}, map_setting1)  //just a shallow copy 
+            map_setting2.canvas_nm = canvas_nm2
+            map_setting2.tree_settings = [tree_setting2]
+
+
 
             document.getElementById("demo_info").textContent = //"Vario-scale demo: " + 
-                map_settings1.initialization.navigationBar_title
+                map_setting1.initialization.navigationBar_title
 
-            let map1 = new varioscale.Map(map_settings1);
+            let map1 = new varioscale.Map(map_setting1);
             map1.loadTree();
 
-            let map2 = new varioscale.Map(map_settings2);
+            let map2 = new varioscale.Map(map_setting2);
             map2.loadTree();
 
 
@@ -574,35 +574,6 @@
             };
             window.addEventListener('resize', resize, false);
             window.addEventListener('orientationchange', resize);
-
-            // // the zoom buttons, and what they should do
-            // document.getElementById("zoomInButton").addEventListener('click', function () {
-            //     var radios = document.getElementsByName('speed');
-            //     let factor = 1
-            //     for (var i = 0, length = radios.length; i < length; i++) {
-            //         if (radios[i].checked) {
-            //             // do whatever you want with the checked radio
-            //             factor = parseFloat(radios[i].value)
-            //             // only one radio can be logically checked, don't check the rest
-            //             break;
-            //         }
-            //     }
-            //     map.zoomInAnimated(window.innerWidth / 2, window.innerHeight / 2, factor);
-            // });
-            // document.getElementById("zoomOutButton").addEventListener('click', function () {
-            //     var radios = document.getElementsByName('speed');
-            //     let factor = 1
-            //     for (var i = 0, length = radios.length; i < length; i++) {
-            //         if (radios[i].checked) {
-            //             // do whatever you want with the checked radio
-            //             factor = parseFloat(radios[i].value)
-            //             // only one radio can be logically checked, don't check the rest
-            //             break;
-            //         }
-            //     }
-            //     map.zoomOutAnimated(window.innerWidth / 2, window.innerHeight / 2, factor);
-            // });
-
 
 
             /* -- start slider -- */

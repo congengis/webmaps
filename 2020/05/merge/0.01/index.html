@@ -129,29 +129,29 @@
                  class="w3-dropdown-content w3-bar-block w3-card w3-right tu-right">
                 <a id="openSettingsButton" class="w3-bar-item w3-button">Settings</a>
                 <!--
-                <a href="#" class="w3-bar-item w3-button">Link 2</a>
-                <a href="#" class="w3-bar-item w3-button">Link 3</a>
-                <a href="#" class="w3-bar-item w3-button">Link 4</a>
-                <a href="#" class="w3-bar-item w3-button">Link 5</a>
-                <a href="#" class="w3-bar-item w3-button">Link 6</a>
-                <a href="#" class="w3-bar-item w3-button">Link 7</a>
-                <a href="#" class="w3-bar-item w3-button">Link 8</a>
-                <a href="#" class="w3-bar-item w3-button">Link 9</a>
-                <a href="#" class="w3-bar-item w3-button">Link 10</a>
-                <a href="#" class="w3-bar-item w3-button">Link 11</a>
-                -->
+            <a href="#" class="w3-bar-item w3-button">Link 2</a>
+            <a href="#" class="w3-bar-item w3-button">Link 3</a>
+            <a href="#" class="w3-bar-item w3-button">Link 4</a>
+            <a href="#" class="w3-bar-item w3-button">Link 5</a>
+            <a href="#" class="w3-bar-item w3-button">Link 6</a>
+            <a href="#" class="w3-bar-item w3-button">Link 7</a>
+            <a href="#" class="w3-bar-item w3-button">Link 8</a>
+            <a href="#" class="w3-bar-item w3-button">Link 9</a>
+            <a href="#" class="w3-bar-item w3-button">Link 10</a>
+            <a href="#" class="w3-bar-item w3-button">Link 11</a>
+            -->
             </div>
         </div>
 
         <!--            class="do-spin" style="visibility: visible;" -->
         <!-- hide, but keep space -->
         <!--
-        <span class="w3-bar-item">
-        <img
-        style="visibility: hidden;"
-        src="spinner.svg" height="20">
-        </span>
-        -->
+    <span class="w3-bar-item">
+    <img
+    style="visibility: hidden;"
+    src="spinner.svg" height="20">
+    </span>
+    -->
 
 
     </div>
@@ -294,24 +294,22 @@
             var window_location = href.substring(0, href.lastIndexOf('/')) + "/";
             // console.log('window_location:', window_location)
 
-            var map_settings = {
+            var map_setting = {
                 'initialization': {
-                    'scale_den': 10000, //top10nl, start_scale
-                    //'scale_den': 100000,  //top10nl; small test, three parcels
+                    //'scale_den': 10000, //top10nl, start_scale
+                    'scale_den': 10000,  //top10nl; small test, three parcels
                     //'scale_den': 12500,
                     // BOX(204914.35 514637.283,270231.624 580203.629)
 
                     //'center2d': [233520.3, 556776.9],
-                    'center2d': [186500.0, 312450.0],     //top10nl, center
-                    // 'center2d': [189382.0, 309698.0],     //top10nl, bottom-right
+                    'center2d': [186500.0, 312450.0],     //top10nl
                     //'center2d': [3555384.0, 5907745.0],   //small test, three parcels
                     //[204914 + (270231 - 204914) * 0.5,
                     // 514637 + (580203 - 514637) * 0.5],
-                    //'navigationBar_title': 'Top10NL Drenthe chunked',
                     'navigationBar_title': 'Top10NL',
                 },
                 'canvas_nm': canvas_nm,
-                'datasets': [{
+                'tree_settings': [{
                     //                              'tree_root_file_nm': 'tree.json',
                     //                              'tree_root_href': '/data/tree-nl/',    // with trailing slash!
                     //                              'tile_root_href': '/data/tiles-nl/',
@@ -331,9 +329,13 @@
 
                     'tree_root_file_nm': 'tree_smooth.json',
                     //'tree_root_file_nm': 'tree.json',
-                    'eventdiff_nm': 'eventdiff.json', //activate this entry if we want to snap to certain steps
+                    'step_event_nm': 'step_event.json', //activate this entry if we want to snap to certain steps
                     'tree_root_href': window_location + 'data/',    // with trailing slash!
                     'tile_root_href': window_location + 'data/',
+                    'draw_cw_faces': false,
+                    'do_depth_test': false,                    
+                    'do_blend': false,
+                    'opacity': 1,
                     /*
                     // See:
                     // https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/
@@ -341,16 +343,16 @@
                     */
                     // 'texture_root_href': 'https://geodata.nationaalgeoregister.nl/luchtfoto/rgb/tms/1.0.0/2017_ortho25/EPSG:28992/'
                     'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/opentopoachtergrondkaart/EPSG:28992/'
-                    // 'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/'
+                    // 'texture_root_href': 'https://geodata.nationaalgeoregister.nl/tiles/service/tms/1.0.0/brtachtergrondkaart/EPSG:28992/'                                  
                 }],
                 'interaction_defaults': []
             }
 
             document.getElementById("demo_info").textContent = //"Vario-scale demo: " + 
-                map_settings.initialization.navigationBar_title
+                map_setting.initialization.navigationBar_title
 
             // Make a new map instance
-            var map = new varioscale.Map(map_settings);
+            var map = new varioscale.Map(map_setting);
             map.loadTree();
 
             window.map = map;
